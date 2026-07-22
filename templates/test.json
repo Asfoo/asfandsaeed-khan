@@ -1,10 +1,82 @@
 {
   "sections": {
-    "hero": {
-      "type": "gift-guide-hero"
+    "gift_guide_hero": {
+      "type": "gift-guide-hero",
+      "settings": {
+        "desktop_height": 760,
+        "mobile_height": 620,
+        "brand_text": "TISSO VISON",
+        "top_message": "Find the ideal gift for your loved ones.",
+        "top_button_label": "CHOOSE GIFT",
+        "heading": "The Gift Guide",
+        "body": "<p>Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>",
+        "cta_label": "SHOP NOW",
+        "bottom_strip_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+      }
+    },
+    "gift_guide_grid": {
+      "type": "gift-guide-grid",
+      "settings": {
+        "heading": "Tisso vision in the wild",
+        "trigger_option_value_one": "Black",
+        "trigger_option_value_two": "Medium"
+      },
+      "blocks": {
+        "card_1": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 36,
+            "hotspot_left": 77
+          }
+        },
+        "card_2": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 38,
+            "hotspot_left": 83
+          }
+        },
+        "card_3": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 26,
+            "hotspot_left": 61
+          }
+        },
+        "card_4": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 20,
+            "hotspot_left": 72
+          }
+        },
+        "card_5": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 27,
+            "hotspot_left": 74
+          }
+        },
+        "card_6": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 34,
+            "hotspot_left": 75
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5",
+        "card_6"
+      ]
     }
   },
   "order": [
-    "hero"
+    "gift_guide_hero",
+    "gift_guide_grid"
   ]
 }

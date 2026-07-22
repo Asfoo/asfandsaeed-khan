@@ -1,0 +1,239 @@
+{{ 'gift-guide.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'gift-guide.js' | asset_url }}" defer="defer"></script>
+
+{%- assign configured_companion = all_products[section.settings.companion_product] -%}
+{%- assign default_companion = all_products['soft-winter-jacket'] -%}
+{%- assign companion_product = configured_companion | default: default_companion -%}
+
+<section
+  class="gg-grid gg-grid--{{ section.id }} color-{{ section.settings.color_scheme }}"
+  data-gg-grid
+  data-section-id="{{ section.id }}"
+  data-trigger-one="{{ section.settings.trigger_option_value_one | escape }}"
+  data-trigger-two="{{ section.settings.trigger_option_value_two | escape }}"
+>
+  <div class="gg-shell">
+    {%- if section.settings.heading != blank -%}
+      <div class="gg-grid__header">
+        <h2 class="gg-grid__title">{{ section.settings.heading }}</h2>
+      </div>
+    {%- endif -%}
+
+    <div class="gg-grid__items">
+      {%- for block in section.blocks -%}
+        {%- assign product = all_products[block.settings.product] -%}
+        <article class="gg-grid__item scroll-trigger animate--slide-in" {{ block.shopify_attributes }}>
+          <div class="gg-grid__card">
+            {%- if product != blank -%}
+              {%- assign lifestyle_image = block.settings.image_override | default: product.featured_image -%}
+
+              <div class="gg-grid__image-wrap">
+                {%- if lifestyle_image != blank -%}
+                  <img
+                    class="gg-grid__image"
+                    src="{{ lifestyle_image | image_url: width: 1200 }}"
+                    alt="{{ lifestyle_image.alt | default: product.title | escape }}"
+                    width="{{ lifestyle_image.width }}"
+                    height="{{ lifestyle_image.height }}"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'gg-grid__image gg-grid__image--placeholder' }}
+                {%- endif -%}
+
+                <button
+                  type="button"
+                  class="gg-grid__hotspot"
+                  style="top: {{ block.settings.hotspot_top }}%; left: {{ block.settings.hotspot_left }}%;"
+                  aria-label="Open product popup for {{ product.title | escape }}"
+                  data-gg-open-product
+                >
+                  <span aria-hidden="true">+</span>
+                </button>
+              </div>
+
+              <script type="application/json" class="gg-product-json">
+                {
+                  "id": {{ product.id | json }},
+                  "handle": {{ product.handle | json }},
+                  "title": {{ product.title | json }},
+                  "url": {{ product.url | json }},
+                  "description": {{ product.description | strip_html | strip_newlines | json }},
+                  "featuredImage": {% if product.featured_image %}{{ product.featured_image | image_url: width: 900 | json }}{% else %}null{% endif %},
+                  "options": {{ product.options | json }},
+                  "variants": [
+                    {%- for variant in product.variants -%}
+                      {
+                        "id": {{ variant.id | json }},
+                        "title": {{ variant.title | json }},
+                        "available": {{ variant.available | json }},
+                        "price": {{ variant.price | json }},
+                        "priceFormatted": {{ variant.price | money | json }},
+                        "featuredImage": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 900 | json }}{% elsif product.featured_image %}{{ product.featured_image | image_url: width: 900 | json }}{% else %}null{% endif %},
+                        "option1": {{ variant.option1 | json }},
+                        "option2": {{ variant.option2 | json }},
+                        "option3": {{ variant.option3 | json }}
+                      }{%- unless forloop.last -%},{%- endunless -%}
+                    {%- endfor -%}
+                  ]
+                }
+              </script>
+            {%- else -%}
+              <div class="gg-grid__placeholder">
+                <div class="gg-grid__placeholder-copy">Select a product in the customizer.</div>
+              </div>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="gg-modal" data-gg-modal hidden>
+    <div class="gg-modal__overlay" data-gg-close-modal></div>
+    <div class="gg-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="GGProductTitle-{{ section.id }}">
+      <button type="button" class="gg-modal__close" aria-label="Close popup" data-gg-close-modal>×</button>
+
+      <div class="gg-modal__layout">
+        <div class="gg-modal__media-wrap">
+          <img class="gg-modal__image" src="" alt="" data-gg-modal-image>
+        </div>
+
+        <div class="gg-modal__content">
+          <h3 class="gg-modal__title" id="GGProductTitle-{{ section.id }}" data-gg-modal-title></h3>
+          <div class="gg-modal__price" data-gg-modal-price></div>
+          <div class="gg-modal__description" data-gg-modal-description></div>
+          <div class="gg-modal__options" data-gg-modal-options></div>
+
+          <button type="button" class="gg-button gg-button--dark gg-button--full" data-gg-add-to-cart>
+            <span>ADD TO CART</span>
+            <span class="gg-button__arrow" aria-hidden="true">→</span>
+          </button>
+
+          <div class="gg-modal__status" data-gg-modal-status aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+
+    {%- if companion_product != blank -%}
+      <script type="application/json" data-gg-companion-json>
+        {
+          "id": {{ companion_product.id | json }},
+          "handle": {{ companion_product.handle | json }},
+          "title": {{ companion_product.title | json }},
+          "url": {{ companion_product.url | json }},
+          "description": {{ companion_product.description | strip_html | strip_newlines | json }},
+          "featuredImage": {% if companion_product.featured_image %}{{ companion_product.featured_image | image_url: width: 900 | json }}{% else %}null{% endif %},
+          "options": {{ companion_product.options | json }},
+          "variants": [
+            {%- for variant in companion_product.variants -%}
+              {
+                "id": {{ variant.id | json }},
+                "title": {{ variant.title | json }},
+                "available": {{ variant.available | json }},
+                "price": {{ variant.price | json }},
+                "priceFormatted": {{ variant.price | money | json }},
+                "featuredImage": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 900 | json }}{% elsif companion_product.featured_image %}{{ companion_product.featured_image | image_url: width: 900 | json }}{% else %}null{% endif %},
+                "option1": {{ variant.option1 | json }},
+                "option2": {{ variant.option2 | json }},
+                "option3": {{ variant.option3 | json }}
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ]
+        }
+      </script>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gift Guide Grid",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tisso vision in the wild"
+    },
+    {
+      "type": "product",
+      "id": "companion_product",
+      "label": "Soft Winter Jacket product",
+      "info": "Optional override. If left blank, the code will try the product handle soft-winter-jacket automatically."
+    },
+    {
+      "type": "text",
+      "id": "trigger_option_value_one",
+      "label": "Rule value 1",
+      "default": "Black"
+    },
+    {
+      "type": "text",
+      "id": "trigger_option_value_two",
+      "label": "Rule value 2",
+      "default": "Medium"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_override",
+          "label": "Lifestyle image override"
+        },
+        {
+          "type": "range",
+          "id": "hotspot_top",
+          "label": "Hotspot vertical position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 35,
+          "unit": "%"
+        },
+        {
+          "type": "range",
+          "id": "hotspot_left",
+          "label": "Hotspot horizontal position",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 75,
+          "unit": "%"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gift Guide Grid",
+      "blocks": [
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
