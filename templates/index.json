@@ -1,75 +1,82 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "gift_guide_hero": {
+      "type": "gift-guide-hero",
+      "settings": {
+        "desktop_height": 760,
+        "mobile_height": 620,
+        "brand_text": "TISSO VISON",
+        "top_message": "Find the ideal gift for your loved ones.",
+        "top_button_label": "CHOOSE GIFT",
+        "heading": "The Gift Guide",
+        "body": "<p>Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>",
+        "cta_label": "SHOP NOW",
+        "bottom_strip_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+      }
+    },
+    "gift_guide_grid": {
+      "type": "gift-guide-grid",
+      "settings": {
+        "heading": "Tisso vision in the wild",
+        "trigger_option_value_one": "Black",
+        "trigger_option_value_two": "Medium"
+      },
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "card_1": {
+          "type": "product_card",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "hotspot_top": 36,
+            "hotspot_left": 77
           }
         },
-        "button": {
-          "type": "buttons",
+        "card_2": {
+          "type": "product_card",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "hotspot_top": 38,
+            "hotspot_left": 83
+          }
+        },
+        "card_3": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 26,
+            "hotspot_left": 61
+          }
+        },
+        "card_4": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 20,
+            "hotspot_left": 72
+          }
+        },
+        "card_5": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 27,
+            "hotspot_left": 74
+          }
+        },
+        "card_6": {
+          "type": "product_card",
+          "settings": {
+            "hotspot_top": 34,
+            "hotspot_left": 75
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
-      }
-    },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
-      }
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4",
+        "card_5",
+        "card_6"
+      ]
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "gift_guide_hero",
+    "gift_guide_grid"
   ]
 }
